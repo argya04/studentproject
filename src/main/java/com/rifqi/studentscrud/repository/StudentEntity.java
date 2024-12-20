@@ -22,20 +22,21 @@ import lombok.Setter;
 @Getter
 @Setter
 public class StudentEntity {
-     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
+    @Column(name = "id")
     private Long id;
     
-    @Column(name = "nim", nullable = false)
+    @Column(name = "nim")
     private String nim;
     
-    @Column(name = "full_name", nullable = false)
+    @Column(name = "full_name")
     private String fullName;
     
-    @Column(name = "address", nullable = false)
+    @Column(name = "address")
     private String address;
     
-    @Column(name = "date_of_birth", nullable = false)
+    @Column(name = "date_of_birth")
     private String dateOfBirth;
 
 //    public Long getId() {

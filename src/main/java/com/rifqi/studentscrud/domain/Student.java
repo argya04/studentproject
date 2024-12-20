@@ -4,9 +4,12 @@
  */
 package com.rifqi.studentscrud.domain;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import java.time.LocalDate;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.validator.constraints.Length;
 
 /**
  *
@@ -16,9 +19,15 @@ import lombok.Setter;
 @Setter
 public class Student {
     private Long id;
+    @NotBlank
+    @Length(max = 10)
     private String nim;
+    
+    @NotBlank
     private String fullName;
+    
     private String address;
+    @NotNull
     private LocalDate dateOfBirth;
 
 //    public Long getId() {
