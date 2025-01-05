@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -24,6 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author USER
  */
 @RestController
+@RequestMapping("/students")
 public class StudentController {
 
     private final StudentService studentService;
@@ -32,38 +34,64 @@ public class StudentController {
     public StudentController(StudentService studentService) {
         this.studentService = studentService;
     }
-
-    @GetMapping("/students")
-    public List<Student> getStudents() {
-        List<Student> studentList = studentService.getAllStudents();
-        return studentList;
+    
+    @GetMapping
+    public List<Student> getAllStudents() {
+        return studentService.getAllStudents();
     }
-
-    @GetMapping("/students/{nim}")
-    public Student getStudentByNim(@PathVariable String nim) {
-        Student student = studentService.getStudentByNim(nim);
-        return student;
-    }
-
-    @PostMapping("/students")
-    public Student createStudent(@RequestBody @Valid Student student) {
+    
+    @PostMapping
+    public void createStudent(@RequestBody Student student) {
         studentService.saveStudent(student);
-        return student;
     }
-
-    @PutMapping("/students/{nim}")
-    public ResponseEntity<String> updateStudent(@PathVariable String nim, @Valid @RequestBody Student student) {
-        if (!studentService.isStudentExist(nim)) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Data Mahasiswa tidak ditemukan!");
-        }
-
+    
+    @GetMapping("/{nim}")
+    public Student getStudentById(@PathVariable String nim) {
+        return studentService.getStudentByNim(nim);
+    }
+    
+    @PutMapping("/{nim}")
+    public Student updateStudent(@PathVariable String nim, @RequestBody Student student) {
         studentService.updateStudent(nim, student);
-        return ResponseEntity.ok("Data Mahasiswa berhasil diupdate");
+        return new Student();
     }
-
-    @DeleteMapping("/students/{nim}")
-    public ResponseEntity<String> deleteStudent(@PathVariable String nim, @Valid @RequestBody Student student) {
+    
+    @DeleteMapping("/{nim}")
+    public void deleteStudent(@PathVariable String nim) {
         studentService.deleteStudentByNim(nim);
-        return ResponseEntity.ok("Mahasiswa dengan NIM " + nim + " berhasil dihapus");
     }
+    
+//    @GetMapping("/students")
+//    public List<Student> getStudents() {
+//        List<Student> studentList = studentService.getAllStudents();
+//        return studentList;
+//    }
+//
+//    @GetMapping("/students/{nim}")
+//    public Student getStudentByNim(@PathVariable String nim) {
+//        Student student = studentService.getStudentByNim(nim);
+//        return student;
+//    }
+//
+//    @PostMapping("/students")
+//    public Student createStudent(@RequestBody @Valid Student student) {
+//        studentService.saveStudent(student);
+//        return student;
+//    }
+//
+//    @PutMapping("/students/{nim}")
+//    public ResponseEntity<String> updateStudent(@PathVariable String nim, @Valid @RequestBody Student student) {
+//        if (!studentService.isStudentExist(nim)) {
+//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Data Mahasiswa tidak ditemukan!");
+//        }
+//
+//        studentService.updateStudent(nim, student);
+//        return ResponseEntity.ok("Data Mahasiswa berhasil diupdate");
+//    }
+//
+//    @DeleteMapping("/students/{nim}")
+//    public ResponseEntity<String> deleteStudent(@PathVariable String nim, @Valid @RequestBody Student student) {
+//        studentService.deleteStudentByNim(nim);
+//        return ResponseEntity.ok("Mahasiswa dengan NIM " + nim + " berhasil dihapus");
+//    }
 }

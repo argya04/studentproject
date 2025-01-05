@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
+-->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body class="font-roboto bg-gray-100">
+    <div class="flex h-screen">
+        <!-- Sidebar -->
+        <div class="bg-blue-600 text-white w-64 space-y-6 py-7 px-2 hidden md:block">
+            <div class="text-center text-2xl font-bold">
+                <i class="fas fa-school"></i> School App
+            </div>
+            <nav class="space-y-1">
+                <a href="/index.html" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-blue-700 border-b border-white active">
+                    <i class="fas fa-home"></i> Home
+                </a>
+                <a href="/create-student.html" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-blue-700 border-b border-white">
+                    <i class="fas fa-user-plus"></i> Create Student
+                </a>
+                <a href="/view-students.html" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-blue-700 border-b border-white">
+                    <i class="fas fa-users"></i> View Students
+                </a>
+            </nav>
+        </div>
+        <!-- Main Content -->
+        <div class="flex-1 p-4 md:p-10">
+            <div class="bg-white p-6 rounded-lg shadow-lg">
+                <h1 class="text-2xl md:text-3xl font-bold">Welcome to the Student Management App</h1>
+                <p class="mt-4">Use the navigation menu to manage students.</p>
+            </div>
+        </div>
+    </div>
+    <!-- Mobile Navigation -->
+    <div class="md:hidden fixed bottom-0 left-0 right-0 bg-blue-600 text-white flex justify-around py-2">
+        <a href="index.html" class="flex flex-col items-center active">
+            <i class="fas fa-home"></i>
+            <span class="text-xs">Home</span>
+        </a>
+        <a href="create-student.html" class="flex flex-col items-center">
+            <i class="fas fa-user-plus"></i>
+            <span class="text-xs">Create Student</span>
+        </a>
+        <a href="view-student.html" class="flex flex-col items-center">
+            <i class="fas fa-users"></i>
+            <span class="text-xs">View Students</span>
+        </a>
+    </div>
+</body>
+</html>

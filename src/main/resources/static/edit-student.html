@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
+-->
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Update Student</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    </head>
+    <body class="font-roboto bg-gray-100">
+        <div class="flex h-screen">
+            <!-- Sidebar -->
+            <div class="bg-blue-600 text-white w-64 space-y-6 py-7 px-2 hidden md:block">
+                <div class="text-center text-2xl font-bold">
+                    <i class="fas fa-school"></i> School App
+                </div>
+                <nav class="space-y-1">
+                    <a href="/index.html" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-blue-700 border-b border-white active">
+                        <i class="fas fa-home"></i> Home
+                    </a>
+                    <a href="/create-student.html" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-blue-700 border-b border-white">
+                        <i class="fas fa-user-plus"></i> Create Student
+                    </a>
+                    <a href="/view-students.html" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-blue-700 border-b border-white">
+                        <i class="fas fa-users"></i> View Students
+                    </a>
+                </nav>
+            </div>
+            <!-- Main Content -->
+            <div class="flex-1 p-4 md:p-10">
+                <div class="bg-white p-6 rounded-lg shadow-lg">
+                    <h1 class="text-2xl md:text-3xl font-bold">Update Student</h1>
+                    <form id="edit-student-form" class="mt-4 space-y-4">
+                        <div>
+                            <label for="nim" class="block text-sm font-medium text-gray-700">NIM</label>
+                            <input type="text" id="nim" name="nim" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" required>
+                        </div>
+                        <div>
+                            <label for="nama" class="block text-sm font-medium text-gray-700">Nama Lengkap</label>
+                            <input type="text" id="fullName" name="fullName" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                        </div>
+
+                        <div>
+                            <label for="tanggal_lahir" class="block text-sm font-medium text-gray-700">Tanggal Lahir</label>
+                            <input type="date" id="dateOfBirth" name="dateOfBirth" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                        </div>
+
+                        <div>
+                            <label for="alamat" class="block text-sm font-medium text-gray-700">Alamat</label>
+                            <input type="text" id="address" name="address" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                        </div>
+                        <div>
+                            <button type="submit" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                                Update Student
+                            </button>
+                        </div>
+
+                        <div>
+                            <button type="button" onclick="window.location.href = '/view-students.html';" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-orange-600 hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500">
+                                Cancel
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                <!--script untuk edit student-->
+                <script>
+                    // Extract student ID from the query string
+                    const urlParams = new URLSearchParams(window.location.search);
+                    const nim = urlParams.get('nim');
+
+                    // Fetch student details and prefill the form
+                    fetch(`/students/${nim}`)
+                            .then(response => response.json())
+                            .then(data => {
+                                document.getElementById('nim').value = data.nim;
+                                document.getElementById('fullName').value = data.fullName;
+                                document.getElementById('dateOfBirth').value = data.dateOfBirth;
+                                document.getElementById('address').value = data.address;
+                            });
+
+                    // Handle form submission
+                    document.getElementById('edit-student-form').addEventListener('submit', function (event) {
+                        event.preventDefault();
+
+                        const student = {
+                            nim: document.getElementById('nim').value,
+                            fullName: document.getElementById('fullName').value,
+                            dateOfBirth: document.getElementById('dateOfBirth').value,
+                            address: document.getElementById('address').value
+                        };
+
+                        fetch(`/students/${nim}`, {
+                            method: 'PUT',
+                            headers: {'Content-Type': 'application/json'},
+                            body: JSON.stringify(student)
+                        })
+                                .then(response => {
+                                    if (response.ok) {
+                                        alert('Berhasil update data student!');
+                                        window.location.href = '/view-students.html';
+                                    } else {
+                                        alert('Gagal update data student!');
+                                    }
+                                });
+                    });
+                </script>
+            </div>
+        </div>
+        <!-- Mobile Navigation -->
+        <div class="md:hidden fixed bottom-0 left-0 right-0 bg-blue-600 text-white flex justify-around py-2">
+            <a href="index.html" class="flex flex-col items-center active">
+                <i class="fas fa-home"></i>
+                <span class="text-xs">Home</span>
+            </a>
+            <a href="create-student.html" class="flex flex-col items-center">
+                <i class="fas fa-user-plus"></i>
+                <span class="text-xs">Create Student</span>
+            </a>
+            <a href="view-student.html" class="flex flex-col items-center">
+                <i class="fas fa-users"></i>
+                <span class="text-xs">View Students</span>
+            </a>
+        </div>
+    </body>
+</html>
+
